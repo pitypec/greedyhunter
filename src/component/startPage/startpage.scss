@@ -34,7 +34,7 @@ $main-color: #43144a;
       line-height: 29.05px;
       text-align: center;
       white-space: nowrap;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
     h3:nth-child(1) {
       margin-top: 20px;
@@ -44,6 +44,7 @@ $main-color: #43144a;
       display: flex;
       align-items: center;
       justify-content: center;
+      margin-top: 20px;
 
       .arrow-up {
         position: absolute;

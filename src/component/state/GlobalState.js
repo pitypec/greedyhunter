@@ -23,8 +23,10 @@ export const GlobalState = ({ children }) => {
   const [finalFoodscaptured, setFinalFoodscaptured] = useState(0);
   const [TimeSpent, setTimeSpent] = useState();
   const [moves, setMoves] = useState(0);
+  const currentTimeSpent = useRef();
   const foodCount = useRef();
-  const [maxMoves, setMaxMoves] = useState(100);
+  const capturedFoods = useRef();
+  const [maxMoves, setMaxMoves] = useState();
   const [startGame, setStartGame] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [resetGame, setResetGame] = useState(false);
@@ -52,19 +54,25 @@ export const GlobalState = ({ children }) => {
 
   useEffect(() => {
     let myInterval = setInterval(() => {
+      currentTimeSpent.current = Seconds;
       if (!gameOver) {
         if (Seconds === 0) {
+          capturedFoods.current = foodsCaptured;
+          setFinalFoodscaptured(capturedFoods.current);
+          setTimeSpent(currentTimeSpent.current);
           setGameOver(true);
+          setResetGame(true);
         }
         if (Seconds > 0) {
           setSeconds(Seconds - 1);
         }
       }
     }, 1000);
+
     return () => {
       clearInterval(myInterval);
     };
-  }, [Seconds, gameOver, resetGame]);
+  }, [Seconds, foodsCaptured, gameOver, resetGame]);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -147,7 +155,6 @@ export const GlobalState = ({ children }) => {
           setFoods(new Map(foods.set(key, false)));
           setFinalFood(foods.size);
           setFoodsCaptured((prevState) => prevState + 1);
-          setFinalFoodscaptured(foodsCaptured);
         }
       }
     };
@@ -158,19 +165,31 @@ export const GlobalState = ({ children }) => {
   // track game status
   useEffect(() => {
     if (foodsCaptured >= foodCount.current) {
+      currentTimeSpent.current = Seconds;
+      capturedFoods.current = foodsCaptured;
+      setFinalFoodscaptured(capturedFoods.current);
+      setTimeSpent(currentTimeSpent.current);
       setGameOver(true);
-      setGrid(Grid);
       alert(`Congratulations you ate all the foods in ${moves} moves.`);
+      setResetGame(true);
     }
-  }, [Grid, foodsCaptured, moves]);
+  }, [Grid, Seconds, foodsCaptured, moves]);
+
+  useEffect(() => {
+    setMaxMoves((Grid * Grid) / 2);
+  }, [Grid]);
 
   useEffect(() => {
     if (moves >= maxMoves) {
-      setMoves((prevState) => (prevState = 100));
+      currentTimeSpent.current = Seconds;
+      capturedFoods.current = foodsCaptured;
+      setFinalFoodscaptured(capturedFoods.current);
+      setTimeSpent(currentTimeSpent.current);
       setGameOver(true);
-      setGrid(Grid);
+      alert(`Maximum moves of ${maxMoves}  reached`);
+      setResetGame(true);
     }
-  }, [Grid, maxMoves, moves]);
+  }, [Grid, Seconds, foodsCaptured, maxMoves, moves]);
 
   const state = {
     Grid: [Grid, setGrid],

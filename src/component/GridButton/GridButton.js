@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
 import arrowup from '../../images/arrowup.svg';
 import arrowdown from '../../images/arrowdown.svg';
 import '../startPage/startpage.scss';
@@ -10,8 +9,6 @@ const GridButton = () => {
   const [Min] = state.Min;
   const [Max] = state.Max;
   const [Grid, setGrid] = state.Grid;
-
-  const history = useHistory();
 
   const handleChange = (e) => {
     const { value, max, min } = e.target;
@@ -28,9 +25,6 @@ const GridButton = () => {
     if (Grid !== Min) {
       setGrid((prevstate) => prevstate - 1);
     }
-  };
-  const handleClick = () => {
-    history.push('/board');
   };
   return (
     <>
@@ -57,9 +51,6 @@ const GridButton = () => {
           className='arrow-down'
           onClick={decrement}
         />
-      </div>
-      <div className='stg-btn'>
-        <button onClick={handleClick}>Start again</button>
       </div>
     </>
   );

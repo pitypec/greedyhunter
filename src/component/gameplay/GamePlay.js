@@ -18,6 +18,7 @@ const GamePlay = () => {
   const [moves] = state.Moves;
   const [boardArray] = state.boardArray;
   const [gameOver] = state.gameOver;
+  const [maxMoves] = state.maxMoves;
 
   useEffect(() => {
     if (gameOver) {
@@ -38,7 +39,7 @@ const GamePlay = () => {
           <img src={heart} alt='heart' className='heart' />
           <img src={liveLine} alt='live-line' className='live-line' />
           <h2>
-            Time spent: <span>00:{Seconds} secs</span>
+            Time spent: <span>{Seconds} secs</span>
           </h2>
         </div>
         {numRows && numCols ? (
@@ -51,8 +52,8 @@ const GamePlay = () => {
           </div>
         ) : null}
         <div className='gp-bottom-area'>
-          <h2>Maximum moves: 100</h2>
-          <h2>Total moves: {moves}</h2>
+          <h2>Maximum moves: {maxMoves}</h2>
+          <h2>Total moves: {moves >= maxMoves ? maxMoves : moves}</h2>
         </div>
       </div>
     </div>
