@@ -1,0 +1,21 @@
+.square {
+  width: 45px;
+  height: 45px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+  border: 1px solid #853594;
+}
+
+.square-content {
+  width: 33px;
+  height: 33px;
+}
+
+.square-content img {
+  object-fit: contain;
+  width: 33px;
+  height: 33px;
+}
